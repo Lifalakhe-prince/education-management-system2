@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - EduManage</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 
+         STUDENT DASHBOARD
+         PURPOSE: Personalized student overview
+         FUNCTIONALITY:
+         - Displays student profile information
+         - Shows attendance statistics
+         - Displays average grades and academic performance
+         - Shows pending assignments count
+         - Lists upcoming exams
+         - Shows latest notifications
+         - Displays upcoming events -->
+    <div id="dashboardScreen" class="screen">
+        
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>EduManage</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" data-page="dashboard" class="nav-link active">
+                    <i class="fas fa-home"></i> Dashboard
+                </a></li>
+                <li class="menu-section student-menu">Academic</li>
+                <li><a href="#" data-page="profile" class="nav-link student-menu">
+                    <i class="fas fa-user"></i> Profile
+                </a></li>
+                <li><a href="#" data-page="grades" class="nav-link student-menu">
+                    <i class="fas fa-chart-line"></i> Grades
+                </a></li>
+                <li><a href="#" data-page="assignments" class="nav-link student-menu">
+                    <i class="fas fa-tasks"></i> Assignments
+                </a></li>
+                <li><a href="#" data-page="timetable" class="nav-link student-menu">
+                    <i class="fas fa-calendar-alt"></i> Timetable
+                </a></li>
+                <li><a href="#" data-page="attendance" class="nav-link student-menu">
+                    <i class="fas fa-check-circle"></i> Attendance
+                </a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <div>
+                        <div id="currentUser">Student Name</div>
+                        <div id="currentRole">Student</div>
+                    </div>
+                </div>
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1>Student Dashboard</h1>
+                <div class="header-actions">
+                    <!-- No add button for student dashboard -->
+                </div>
+            </header>
+
+            <div id="pageContent" class="page-content">
+                
+                <!-- Student Dashboard Content -->
+                <div id="dashboardPage" class="page active">
+                    
+                    <!-- Profile Section -->
+                    <div class="dashboard-section">
+                        <div class="profile-card">
+                            <div class="profile-header">
+                                <div class="profile-avatar">
+                                    <img id="dashboardProfileImage" src="" alt="Profile Picture" style="display: none;">
+                                    <i class="fas fa-user-circle" id="dashboardProfileIcon"></i>
+                                    <div class="profile-avatar-upload" onclick="eduManage.uploadProfileImage()">
+                                        <i class="fas fa-camera"></i>
+                                    </div>
+                                </div>
+                                <div class="profile-info">
+                                    <h2 id="studentName">Loading...</h2>
+                                    <p id="studentClass">Loading...</p>
+                                    <p id="studentEmail">Loading...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Statistics -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon blue">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="attendancePercentage">0%</h3>
+                                <p>Attendance Rate</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="averageGrade">A</h3>
+                                <p>Average Grade</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon blue">
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="pendingAssignments">0</h3>
+                                <p>Pending Assignments</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="upcomingExams">0</h3>
+                                <p>Upcoming Exams</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications and Events -->
+                    <div class="dashboard-charts">
+                        <div class="chart-container">
+                            <h3><i class="fas fa-bell"></i> Latest Notifications</h3>
+                            <div id="studentNotifications" class="notifications-list">
+                                <!-- Notifications will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <h3><i class="fas fa-calendar-check"></i> Upcoming Events</h3>
+                            <div id="upcomingEvents" class="events-list">
+                                <!-- Events will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../js/script.js"></script>
+</body>
+</html>

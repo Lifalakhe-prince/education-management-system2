@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Timetable - EduManage</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 
+         STUDENT TIMETABLE PAGE
+         PURPOSE: Display class schedule
+         FUNCTIONALITY:
+         - Show weekly class schedule in grid format
+         - Display subject, time, and room for each class
+         - Allow navigation between weeks
+         - Show current day/time indicator
+         - Provide day view option
+         - Show class details on hover/click
+         - Highlight upcoming classes
+         - Display teacher information for each class -->
+    <div id="dashboardScreen" class="screen">
+        
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>EduManage</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" data-page="dashboard" class="nav-link">
+                    <i class="fas fa-home"></i> Dashboard
+                </a></li>
+                <li class="menu-section student-menu">Academic</li>
+                <li><a href="#" data-page="profile" class="nav-link student-menu">
+                    <i class="fas fa-user"></i> Profile
+                </a></li>
+                <li><a href="#" data-page="grades" class="nav-link student-menu">
+                    <i class="fas fa-chart-line"></i> Grades
+                </a></li>
+                <li><a href="#" data-page="assignments" class="nav-link student-menu">
+                    <i class="fas fa-tasks"></i> Assignments
+                </a></li>
+                <li><a href="#" data-page="timetable" class="nav-link student-menu active">
+                    <i class="fas fa-calendar-alt"></i> Timetable
+                </a></li>
+                <li><a href="#" data-page="attendance" class="nav-link student-menu">
+                    <i class="fas fa-check-circle"></i> Attendance
+                </a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <div>
+                        <div id="currentUser">Student Name</div>
+                        <div id="currentRole">Student</div>
+                    </div>
+                </div>
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1>My Timetable</h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="eduManage.printTimetable()">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                    <button class="btn btn-secondary" onclick="eduManage.exportTimetable()">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </header>
+
+            <div id="pageContent" class="page-content">
+                
+                <!-- Timetable Page Content -->
+                <div id="timetablePage" class="page active">
+                    
+                    <!-- Timetable Controls -->
+                    <div class="timetable-controls">
+                        <div class="view-controls">
+                            <select id="timetableView">
+                                <option value="week">Week View</option>
+                                <option value="day">Day View</option>
+                                <option value="month">Month View</option>
+                            </select>
+                            <select id="currentWeek">
+                                <!-- Week options will be loaded dynamically -->
+                            </select>
+                        </div>
+                        <div class="navigation-controls">
+                            <button class="btn btn-secondary" onclick="eduManage.previousWeek()">
+                                <i class="fas fa-chevron-left"></i> Previous
+                            </button>
+                            <button class="btn btn-primary" onclick="eduManage.currentWeek()">
+                                <i class="fas fa-calendar-day"></i> This Week
+                            </button>
+                            <button class="btn btn-secondary" onclick="eduManage.nextWeek()">
+                                <i class="fas fa-chevron-right"></i> Next
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Current Week Info -->
+                    <div class="week-info">
+                        <h2 id="weekRange">Loading...</h2>
+                        <div class="week-stats">
+                            <div class="week-stat">
+                                <i class="fas fa-book"></i>
+                                <span id="totalClasses">0</span> Classes
+                            </div>
+                            <div class="week-stat">
+                                <i class="fas fa-clock"></i>
+                                <span id="totalHours">0</span> Hours
+                            </div>
+                            <div class="week-stat">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                                <span id="totalTeachers">0</span> Teachers
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Timetable Grid -->
+                    <div class="timetable-container">
+                        <div class="timetable-grid" id="timetableGrid">
+                            <!-- Timetable cells will be loaded dynamically -->
+                        </div>
+                    </div>
+                    
+                    <!-- Day View (Hidden by default) -->
+                    <div id="dayView" class="day-view" style="display: none;">
+                        <div class="day-schedule" id="daySchedule">
+                            <!-- Day schedule will be loaded dynamically -->
+                        </div>
+                    </div>
+                    
+                    <!-- Class Details Modal -->
+                    <div id="classModal" class="modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 id="classModalTitle">Class Details</h2>
+                                <button class="modal-close" onclick="eduManage.closeClassModal()">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="class-details">
+                                    <div class="class-detail-item">
+                                        <label>Subject:</label>
+                                        <span id="modalSubject">-</span>
+                                    </div>
+                                    <div class="class-detail-item">
+                                        <label>Teacher:</label>
+                                        <span id="modalTeacher">-</span>
+                                    </div>
+                                    <div class="class-detail-item">
+                                        <label>Time:</label>
+                                        <span id="modalTime">-</span>
+                                    </div>
+                                    <div class="class-detail-item">
+                                        <label>Room:</label>
+                                        <span id="modalRoom">-</span>
+                                    </div>
+                                    <div class="class-detail-item">
+                                        <label>Duration:</label>
+                                        <span id="modalDuration">-</span>
+                                    </div>
+                                    <div class="class-detail-item">
+                                        <label>Class Type:</label>
+                                        <span id="modalClassType">-</span>
+                                    </div>
+                                </div>
+                                <div class="modal-actions">
+                                    <button class="btn btn-secondary" onclick="eduManage.closeClassModal()">Close</button>
+                                    <button class="btn btn-primary" onclick="eduManage.addToCalendar()">
+                                        <i class="fas fa-calendar-plus"></i> Add to Calendar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Empty State -->
+                    <div id="emptyTimetableState" class="empty-state" style="display: none;">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h3>No Classes Scheduled</h3>
+                        <p>No classes are scheduled for this period.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../js/script.js"></script>
+</body>
+</html>

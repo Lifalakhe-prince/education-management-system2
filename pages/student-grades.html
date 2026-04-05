@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grades - EduManage</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 
+         STUDENT GRADES PAGE
+         PURPOSE: Display academic performance and results
+         FUNCTIONALITY:
+         - Shows academic performance summary
+         - Displays average grade calculation
+         - Shows total subjects count
+         - Shows highest score achieved
+         - Lists all exam results with details
+         - Calculates percentage and grade for each exam
+         - Shows subject-wise performance-->
+    <div id="dashboardScreen" class="screen">
+        
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>EduManage</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" data-page="dashboard" class="nav-link">
+                    <i class="fas fa-home"></i> Dashboard
+                </a></li>
+                <li class="menu-section student-menu">Academic</li>
+                <li><a href="#" data-page="profile" class="nav-link student-menu">
+                    <i class="fas fa-user"></i> Profile
+                </a></li>
+                <li><a href="#" data-page="grades" class="nav-link student-menu active">
+                    <i class="fas fa-chart-line"></i> Grades
+                </a></li>
+                <li><a href="#" data-page="assignments" class="nav-link student-menu">
+                    <i class="fas fa-tasks"></i> Assignments
+                </a></li>
+                <li><a href="#" data-page="timetable" class="nav-link student-menu">
+                    <i class="fas fa-calendar-alt"></i> Timetable
+                </a></li>
+                <li><a href="#" data-page="attendance" class="nav-link student-menu">
+                    <i class="fas fa-check-circle"></i> Attendance
+                </a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <div>
+                        <div id="currentUser">Student Name</div>
+                        <div id="currentRole">Student</div>
+                    </div>
+                </div>
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1>My Grades</h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="eduManage.printGrades()">
+                        <i class="fas fa-print"></i> Print Report
+                    </button>
+                </div>
+            </header>
+
+            <div id="pageContent" class="page-content">
+                
+                <!-- Grades Page Content -->
+                <div id="gradesPage" class="page active">
+                    
+                    <!-- Academic Performance Overview -->
+                    <div class="grades-overview">
+                        <div class="grade-summary-card">
+                            <h3>Academic Performance Summary</h3>
+                            <div class="grade-stats">
+                                <div class="grade-stat-item">
+                                    <span class="grade-label">Average Grade:</span>
+                                    <span class="grade-value" id="avgGradeValue">A</span>
+                                </div>
+                                <div class="grade-stat-item">
+                                    <span class="grade-label">Total Subjects:</span>
+                                    <span class="grade-value" id="totalSubjectsValue">0</span>
+                                </div>
+                                <div class="grade-stat-item">
+                                    <span class="grade-label">Highest Score:</span>
+                                    <span class="grade-value" id="highestScoreValue">0%</span>
+                                </div>
+                                <div class="grade-stat-item">
+                                    <span class="grade-label">Overall Percentage:</span>
+                                    <span class="grade-value" id="overallPercentageValue">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Detailed Grades Table -->
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Exam Date</th>
+                                    <th>Marks Obtained</th>
+                                    <th>Total Marks</th>
+                                    <th>Percentage</th>
+                                    <th>Grade</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="gradesTableBody">
+                                <!-- Grade records will be loaded here dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Grade Distribution Chart -->
+                    <div class="dashboard-charts">
+                        <div class="chart-container">
+                            <h3>Grade Distribution</h3>
+                            <div id="gradeDistribution" class="grade-chart">
+                                <!-- Grade distribution visualization will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <h3>Subject Performance</h3>
+                            <div id="subjectPerformance" class="performance-chart">
+                                <!-- Subject performance chart will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../js/script.js"></script>
+</body>
+</html>

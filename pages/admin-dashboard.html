@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - EduManage</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 
+         ADMIN DASHBOARD
+         PURPOSE: System overview and management
+         FUNCTIONALITY:
+         - Display system statistics for (students, teachers, classes, subjects)
+         - Show recent activities and system events
+         - Provide quick access to management functions
+         - Display charts and analytics
+         - Show pending tasks and notifications
+         - Allow quick data entry and management
+        -->
+    <div id="dashboardScreen" class="screen">
+        
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>EduManage</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" data-page="dashboard" class="nav-link active">
+                    <i class="fas fa-home"></i> Dashboard
+                </a></li>
+                
+                <!-- Management Section -->
+                <li class="menu-section admin-menu">Management</li>
+                <li><a href="#" data-page="students" class="nav-link admin-menu">
+                    <i class="fas fa-user-graduate"></i> Students
+                </a></li>
+                <li><a href="#" data-page="teachers" class="nav-link admin-menu">
+                    <i class="fas fa-chalkboard-teacher"></i> Teachers
+                </a></li>
+                <li><a href="#" data-page="classes" class="nav-link admin-menu">
+                    <i class="fas fa-school"></i> Classes
+                </a></li>
+                <li><a href="#" data-page="subjects" class="nav-link admin-menu">
+                    <i class="fas fa-book"></i> Subjects
+                </a></li>
+                
+                <!-- Academic Section -->
+                <li class="menu-section admin-menu academic-menu">Academic</li>
+                <li><a href="#" data-page="exams" class="nav-link academic-menu">
+                    <i class="fas fa-clipboard-list"></i> Exams
+                </a></li>
+                <li><a href="#" data-page="results" class="nav-link academic-menu">
+                    <i class="fas fa-chart-line"></i> Results
+                </a></li>
+                <li><a href="#" data-page="attendance" class="nav-link academic-menu">
+                    <i class="fas fa-check-circle"></i> Attendance
+                </a></li>
+                <li><a href="#" data-page="fees" class="nav-link academic-menu">
+                    <i class="fas fa-dollar-sign"></i> Fees
+                </a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <div>
+                        <div id="currentUser">Admin Name</div>
+                        <div id="currentRole">Administrator</div>
+                    </div>
+                </div>
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1>Admin Dashboard</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="addBtn">
+                        <i class="fas fa-plus"></i> Add New
+                    </button>
+                    <button class="btn btn-secondary" onclick="eduManage.generateReport()">
+                        <i class="fas fa-file-alt"></i> Generate Report
+                    </button>
+                    <button class="btn btn-secondary" onclick="eduManage.systemSettings()">
+                        <i class="fas fa-cog"></i> Settings
+                    </button>
+                </div>
+            </header>
+
+            <div id="pageContent" class="page-content">
+                
+                <!-- Admin Dashboard Content -->
+                <div id="dashboardPage" class="page active">
+                    
+                    <!-- System Statistics -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon blue">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalStudents">0</h3>
+                                <p>Total Students</p>
+                                <small><i class="fas fa-arrow-up"></i> +12% this month</small>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalTeachers">0</h3>
+                                <p>Total Teachers</p>
+                                <small><i class="fas fa-arrow-up"></i> +5% this month</small>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon blue">
+                                <i class="fas fa-school"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalClasses">0</h3>
+                                <p>Total Classes</p>
+                                <small><i class="fas fa-arrow-up"></i> +8% this month</small>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalSubjects">0</h3>
+                                <p>Total Subjects</p>
+                                <small><i class="fas fa-arrow-up"></i> +3% this month</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <h3>Quick Actions</h3>
+                        <div class="action-grid">
+                            <button class="action-card" onclick="eduManage.openModal('students')">
+                                <i class="fas fa-user-plus"></i>
+                                <span>Add Student</span>
+                            </button>
+                            <button class="action-card" onclick="eduManage.openModal('teachers')">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                                <span>Add Teacher</span>
+                            </button>
+                            <button class="action-card" onclick="eduManage.openModal('classes')">
+                                <i class="fas fa-school"></i>
+                                <span>Create Class</span>
+                            </button>
+                            <button class="action-card" onclick="eduManage.openModal('exams')">
+                                <i class="fas fa-clipboard-list"></i>
+                                <span>Schedule Exam</span>
+                            </button>
+                            <button class="action-card" onclick="eduManage.markAttendance()">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Mark Attendance</span>
+                            </button>
+                            <button class="action-card" onclick="eduManage.manageFees()">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>Manage Fees</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Charts and Analytics -->
+                    <div class="dashboard-charts">
+                        <div class="chart-container">
+                            <h3>Recent Activities</h3>
+                            <div id="recentActivities" class="activity-list">
+                                <!-- Recent activities will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <h3>System Overview</h3>
+                            <div id="systemOverview" class="overview-stats">
+                                <div class="overview-item">
+                                    <i class="fas fa-users"></i>
+                                    <div>
+                                        <span class="overview-value" id="activeUsers">0</span>
+                                        <span class="overview-label">Active Users</span>
+                                    </div>
+                                </div>
+                                <div class="overview-item">
+                                    <i class="fas fa-calendar-check"></i>
+                                    <div>
+                                        <span class="overview-value" id="todayClasses">0</span>
+                                        <span class="overview-label">Today's Classes</span>
+                                    </div>
+                                </div>
+                                <div class="overview-item">
+                                    <i class="fas fa-tasks"></i>
+                                    <div>
+                                        <span class="overview-value" id="pendingTasks">0</span>
+                                        <span class="overview-label">Pending Tasks</span>
+                                    </div>
+                                </div>
+                                <div class="overview-item">
+                                    <i class="fas fa-bell"></i>
+                                    <div>
+                                        <span class="overview-value" id="notifications">0</span>
+                                        <span class="overview-label">Notifications</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Performance Metrics -->
+                    <div class="performance-metrics">
+                        <h3>Performance Metrics</h3>
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <h4>Attendance Rate</h4>
+                                <div class="metric-value" id="attendanceRate">0%</div>
+                                <div class="metric-trend positive">
+                                    <i class="fas fa-arrow-up"></i> 2.5%
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <h4>Pass Rate</h4>
+                                <div class="metric-value" id="passRate">0%</div>
+                                <div class="metric-trend positive">
+                                    <i class="fas fa-arrow-up"></i> 1.8%
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <h4>Average Grade</h4>
+                                <div class="metric-value" id="avgGrade">0</div>
+                                <div class="metric-trend negative">
+                                    <i class="fas fa-arrow-down"></i> 0.3%
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <h4>Fee Collection</h4>
+                                <div class="metric-value" id="feeCollection">0%</div>
+                                <div class="metric-trend positive">
+                                    <i class="fas fa-arrow-up"></i> 5.2%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../js/script.js"></script>
+</body>
+</html>

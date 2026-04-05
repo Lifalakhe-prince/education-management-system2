@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Students - EduManage</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 
+         ADMIN STUDENTS PAGE
+         PURPOSE: Manage student records and information
+         FUNCTIONALITY:
+         - Display all students in a table format
+         - Add new students with complete information
+         - Edit existing student details
+         - Delete student records
+         - Filter students by class or other criteria
+         - Search for specific students
+         - Perform operations (import, delete multiple)
+         - View student profile and academic history
+         - Manage student class assignments
+    -->
+    <div id="dashboardScreen" class="screen">
+        
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>EduManage</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" data-page="dashboard" class="nav-link">
+                    <i class="fas fa-home"></i> Dashboard
+                </a></li>
+                
+                <!-- Management Section -->
+                <li class="menu-section admin-menu">Management</li>
+                <li><a href="#" data-page="students" class="nav-link admin-menu active">
+                    <i class="fas fa-user-graduate"></i> Students
+                </a></li>
+                <li><a href="#" data-page="teachers" class="nav-link admin-menu">
+                    <i class="fas fa-chalkboard-teacher"></i> Teachers
+                </a></li>
+                <li><a href="#" data-page="classes" class="nav-link admin-menu">
+                    <i class="fas fa-school"></i> Classes
+                </a></li>
+                <li><a href="#" data-page="subjects" class="nav-link admin-menu">
+                    <i class="fas fa-book"></i> Subjects
+                </a></li>
+                
+                <!-- Academic Section -->
+                <li class="menu-section admin-menu academic-menu">Academic</li>
+                <li><a href="#" data-page="exams" class="nav-link academic-menu">
+                    <i class="fas fa-clipboard-list"></i> Exams
+                </a></li>
+                <li><a href="#" data-page="results" class="nav-link academic-menu">
+                    <i class="fas fa-chart-line"></i> Results
+                </a></li>
+                <li><a href="#" data-page="attendance" class="nav-link academic-menu">
+                    <i class="fas fa-check-circle"></i> Attendance
+                </a></li>
+                <li><a href="#" data-page="fees" class="nav-link academic-menu">
+                    <i class="fas fa-dollar-sign"></i> Fees
+                </a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <div>
+                        <div id="currentUser">Admin Name</div>
+                        <div id="currentRole">Administrator</div>
+                    </div>
+                </div>
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1>Manage Students</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="addBtn">
+                        <i class="fas fa-plus"></i> Add Student
+                    </button>
+                    <button class="btn btn-secondary" onclick="eduManage.importStudents()">
+                        <i class="fas fa-upload"></i> Import
+                    </button>
+                    <button class="btn btn-secondary" onclick="eduManage.exportStudents()">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </header>
+
+            <div id="pageContent" class="page-content">
+                
+                <!-- Students Management Content -->
+                <div id="studentsPage" class="page active">
+                    
+                    <!-- Search and Filters -->
+                    <div class="students-filters">
+                        <div class="filter-group">
+                            <input type="text" id="studentSearch" placeholder="Search students by name or email...">
+                        </div>
+                        <div class="filter-group">
+                            <select id="classFilter">
+                                <option value="">All Classes</option>
+                                <!-- Class options will be loaded dynamically -->
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <select id="statusFilter">
+                                <option value="">All Status</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="graduated">Graduated</option>
+                            </select>
+                        </div>
+                        <div class="filter-actions">
+                            <button class="btn btn-secondary" onclick="eduManage.clearStudentFilters()">
+                                <i class="fas fa-times"></i> Clear
+                            </button>
+                            <button class="btn btn-secondary" onclick="eduManage.applyFilters()">
+                                <i class="fas fa-filter"></i> Apply
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Statistics Cards -->
+                    <div class="student-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon blue">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalStudentsCount">0</h3>
+                                <p>Total Students</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="activeStudentsCount">0</h3>
+                                <p>Active Students</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon blue">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="newStudentsCount">0</h3>
+                                <p>New This Month</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="graduatedStudentsCount">0</h3>
+                                <p>Graduated</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Students Table -->
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>Student Records</h3>
+                            <div class="table-actions">
+                                <button class="btn btn-secondary" onclick="eduManage.selectAllStudents()">
+                                    <i class="fas fa-check-square"></i> Select All
+                                </button>
+                                <button class="btn btn-danger" onclick="eduManage.deleteSelectedStudents()">
+                                    <i class="fas fa-trash"></i> Delete Selected
+                                </button>
+                            </div>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="selectAllCheckbox" onchange="eduManage.toggleSelectAll()">
+                                    </th>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Date of Birth</th>
+                                    <th>Class</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTableBody">
+                                <!-- Student records will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <button class="btn btn-secondary" onclick="eduManage.previousPage()">
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        <span class="page-info">
+                            Page <span id="currentPage">1</span> of <span id="totalPages">1</span>
+                        </span>
+                        <button class="btn btn-secondary" onclick="eduManage.nextPage()">
+                            <i class="fas fa-chevron-right"></i> Next
+                        </button>
+                    </div>
+                    
+                    <!-- Empty State -->
+                    <div id="emptyStudentsState" class="empty-state" style="display: none;">
+                        <i class="fas fa-user-graduate"></i>
+                        <h3>No Students Found</h3>
+                        <p>No students match your search criteria.</p>
+                        <button class="btn btn-primary" onclick="eduManage.openModal('students')">
+                            <i class="fas fa-plus"></i> Add First Student
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../js/script.js"></script>
+</body>
+</html>

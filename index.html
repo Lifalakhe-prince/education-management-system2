@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduManage - Education Management System</title>
+    
+    <!-- 
+         CSS STYLESHEETS -->
+    
+    <!-- Main stylesheet with all component styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Google Fonts - Inter font family -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 
+         LOGIN SCREEN
+         First screen users see when accessing the system
+          -->
+    <div id="loginScreen" class="screen active">
+        <div class="login-container">
+            <div class="login-card">
+                <!-- Login header with logo and title -->
+                <div class="login-header">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>EduManage</h1>
+                    <p>Education Management System</p>
+                </div>
+                
+                <!-- Login form with username, password, and role selection -->
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Login as</label>
+                        <select id="role" name="role" required>
+                            <option value="">Select Role</option>
+                            <option value="admin">Admin</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="student">Student</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="login-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Login
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 
+         MAIN DASHBOARD SCREEN
+         Main application interface after login
+          -->
+    <div id="dashboardScreen" class="screen">
+        
+        <!-- 
+             SIDEBAR NAVIGATION
+             Left navigation menu with role-based items
+              -->
+        <nav class="sidebar">
+            <!-- Sidebar header with logo -->
+            <div class="sidebar-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>EduManage</h2>
+            </div>
+            
+            <!-- Navigation menu items -->
+            <ul class="sidebar-menu">
+                <!-- Dashboard link - always visible -->
+                <li><a href="#" data-page="dashboard" class="nav-link active">
+                    <i class="fas fa-home"></i> Dashboard
+                </a></li>
+                
+                <!-- Student-specific menu items -->
+                <li class="menu-section student-menu">Academic</li>
+                <li><a href="#" data-page="profile" class="nav-link student-menu">
+                    <i class="fas fa-user"></i> Profile
+                </a></li>
+                <li><a href="#" data-page="grades" class="nav-link student-menu">
+                    <i class="fas fa-chart-line"></i> Grades
+                </a></li>
+                <li><a href="#" data-page="assignments" class="nav-link student-menu">
+                    <i class="fas fa-tasks"></i> Assignments
+                </a></li>
+                <li><a href="#" data-page="timetable" class="nav-link student-menu">
+                    <i class="fas fa-calendar-alt"></i> Timetable
+                </a></li>
+                <li><a href="#" data-page="attendance" class="nav-link student-menu">
+                    <i class="fas fa-check-circle"></i> Attendance
+                </a></li>
+                
+                <!-- Admin/Teacher specific menu items -->
+                <li class="menu-section admin-menu">Management</li>
+                <li><a href="#" data-page="students" class="nav-link admin-menu">
+                    <i class="fas fa-user-graduate"></i> Students
+                </a></li>
+                <li><a href="#" data-page="teachers" class="nav-link admin-menu">
+                    <i class="fas fa-chalkboard-teacher"></i> Teachers
+                </a></li>
+                <li><a href="#" data-page="classes" class="nav-link admin-menu">
+                    <i class="fas fa-school"></i> Classes
+                </a></li>
+                <li><a href="#" data-page="subjects" class="nav-link admin-menu">
+                    <i class="fas fa-book"></i> Subjects
+                </a></li>
+                <li class="menu-section admin-menu academic-menu">Academic</li>
+                <li><a href="#" data-page="exams" class="nav-link academic-menu">
+                    <i class="fas fa-clipboard-list"></i> Exams
+                </a></li>
+                <li><a href="#" data-page="results" class="nav-link academic-menu">
+                    <i class="fas fa-chart-line"></i> Results
+                </a></li>
+                <li><a href="#" data-page="fees" class="nav-link academic-menu">
+                    <i class="fas fa-dollar-sign"></i> Fees
+                </a></li>
+            </ul>
+            
+            <!-- User info and logout -->
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <div>
+                        <div id="currentUser"></div>
+                        <div id="currentRole"></div>
+                    </div>
+                </div>
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- 
+             MAIN CONTENT AREA
+             Right side content area with header and pages
+              -->
+        <main class="main-content">
+            <!-- Content header with title and actions -->
+            <header class="content-header">
+                <h1 id="pageTitle">Dashboard</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="addBtn">
+                        <i class="fas fa-plus"></i> Add New
+                    </button>
+                </div>
+            </header>
+
+            <!-- 
+                 PAGE CONTENT CONTAINER
+                 All different pages are loaded here
+                  -->
+            <div id="pageContent" class="page-content">
+                
+                <!-- 
+                     DASHBOARD PAGE
+                     Shows different content based on user role
+                     -->
+                <div id="dashboardPage" class="page active">
+                    
+                    <!-- Student Dashboard - Personalized for students -->
+                    <div id="studentDashboard" class="student-dashboard" style="display: none;">
+                        
+                        <!-- Profile Section -->
+                        <div class="dashboard-section">
+                            <div class="profile-card">
+                                <div class="profile-header">
+                                    <div class="profile-avatar">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="profile-info">
+                                        <h2 id="studentName">Loading...</h2>
+                                        <p id="studentClass">Loading...</p>
+                                        <p id="studentEmail">Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Stats Cards -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon blue">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="attendancePercentage">0%</h3>
+                                    <p>Attendance Rate</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon orange">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="averageGrade">A</h3>
+                                    <p>Average Grade</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon blue">
+                                    <i class="fas fa-tasks"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="pendingAssignments">0</h3>
+                                    <p>Pending Assignments</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon orange">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="upcomingExams">0</h3>
+                                    <p>Upcoming Exams</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notifications and Events -->
+                        <div class="dashboard-charts">
+                            <div class="chart-container">
+                                <h3><i class="fas fa-bell"></i> Latest Notifications</h3>
+                                <div id="studentNotifications" class="notifications-list"></div>
+                            </div>
+                            <div class="chart-container">
+                                <h3><i class="fas fa-calendar-check"></i> Upcoming Events</h3>
+                                <div id="upcomingEvents" class="events-list"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Admin Dashboard - System overview for admins/teachers -->
+                    <div id="adminDashboard" class="admin-dashboard">
+                        <!-- System Statistics -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon blue">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="totalStudents">0</h3>
+                                    <p>Total Students</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon orange">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="totalTeachers">0</h3>
+                                    <p>Total Teachers</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon blue">
+                                    <i class="fas fa-school"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="totalClasses">0</h3>
+                                    <p>Total Classes</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon orange">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="totalSubjects">0</h3>
+                                    <p>Total Subjects</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Activities -->
+                        <div class="dashboard-charts">
+                            <div class="chart-container">
+                                <h3>Recent Activities</h3>
+                                <div id="recentActivities" class="activity-list"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 
+                     PROFILE PAGE
+                     Detailed student profile information
+                      -->
+                <div id="profilePage" class="page">
+                    <div class="profile-full-card">
+                        <div class="profile-header-full">
+                            <div class="profile-avatar-large">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="profile-details">
+                                <h2 id="profileFullName">Loading...</h2>
+                                <p id="profileStudentInfo">Loading...</p>
+                                <div class="profile-stats">
+                                    <div class="profile-stat">
+                                        <i class="fas fa-envelope"></i>
+                                        <span id="profileEmail">Loading...</span>
+                                    </div>
+                                    <div class="profile-stat">
+                                        <i class="fas fa-birthday-cake"></i>
+                                        <span id="profileDOB">Loading...</span>
+                                    </div>
+                                    <div class="profile-stat">
+                                        <i class="fas fa-school"></i>
+                                        <span id="profileClass">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-actions">
+                            <button class="btn btn-primary" onclick="eduManage.editProfile()">
+                                <i class="fas fa-edit"></i> Edit Profile
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 
+                     GRADES PAGE
+                     Student academic performance and results
+                     -->
+                <div id="gradesPage" class="page">
+                    <!-- Academic Performance Overview -->
+                    <div class="grades-overview">
+                        <div class="grade-summary-card">
+                            <h3>Academic Performance</h3>
+                            <div class="grade-stats">
+                                <div class="grade-stat-item">
+                                    <span class="grade-label">Average Grade:</span>
+                                    <span class="grade-value" id="avgGradeValue">A</span>
+                                </div>
+                                <div class="grade-stat-item">
+                                    <span class="grade-label">Total Subjects:</span>
+                                    <span class="grade-value" id="totalSubjectsValue">0</span>
+                                </div>
+                                <div class="grade-stat-item">
+                                    <span class="grade-label">Highest Score:</span>
+                                    <span class="grade-value" id="highestScoreValue">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Grades Table -->
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Exam Date</th>
+                                    <th>Marks Obtained</th>
+                                    <th>Total Marks</th>
+                                    <th>Percentage</th>
+                                    <th>Grade</th>
+                                </tr>
+                            </thead>
+                            <tbody id="gradesTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 
+                     ASSIGNMENTS PAGE
+                     Student assignments with status and submission
+                    -->
+                <div id="assignmentsPage" class="page">
+                    <!-- Assignment Filters -->
+                    <div class="assignments-filters">
+                        <select id="assignmentStatusFilter">
+                            <option value="">All Assignments</option>
+                            <option value="pending">Pending</option>
+                            <option value="submitted">Submitted</option>
+                            <option value="overdue">Overdue</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="eduManage.uploadAssignment()">
+                            <i class="fas fa-upload"></i> Submit Assignment
+                        </button>
+                    </div>
+                    
+                    <!-- Assignments Grid -->
+                    <div class="assignments-grid" id="assignmentsGrid"></div>
+                </div>
+
+                <!-- 
+                     TIMETABLE PAGE
+                     Student class schedule
+                      -->
+                <div id="timetablePage" class="page">
+                    <!-- Timetable Controls -->
+                    <div class="timetable-controls">
+                        <select id="timetableView">
+                            <option value="week">Week View</option>
+                            <option value="day">Day View</option>
+                        </select>
+                        <button class="btn btn-secondary" onclick="eduManage.previousWeek()">
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        <button class="btn btn-secondary" onclick="eduManage.nextWeek()">
+                            <i class="fas fa-chevron-right"></i> Next
+                        </button>
+                    </div>
+                    
+                    <!-- Timetable Grid -->
+                    <div class="timetable-container">
+                        <div class="timetable-grid" id="timetableGrid"></div>
+                    </div>
+                </div>
+
+                <!-- 
+                     STUDENTS MANAGEMENT PAGE
+                     Admin/Teacher only - Manage student records
+                     -->
+                <div id="studentsPage" class="page">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Date of Birth</th>
+                                    <th>Class</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 
+                     TEACHERS MANAGEMENT PAGE
+                     Admin only - Manage teacher records
+                    -->
+                <div id="teachersPage" class="page">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Hire Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teachersTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!--
+                     CLASSES MANAGEMENT PAGE
+                     Admin/Teacher only - Manage class records
+                      -->
+                <div id="classesPage" class="page">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Teacher</th>
+                                    <th>Subject</th>
+                                    <th>Students</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="classesTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 
+                     SUBJECTS MANAGEMENT PAGE
+                     Admin only - Manage subject records
+                 -->
+                <div id="subjectsPage" class="page">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="subjectsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 
+                     ATTENDANCE PAGE
+                     Different views for students vs admin/teachers
+                   -->
+                <div id="attendancePage" class="page">
+                    <!-- Attendance Filters (Admin/Teacher view) -->
+                    <div class="attendance-filters">
+                        <select id="attendanceClassFilter">
+                            <option value="">All Classes</option>
+                        </select>
+                        <input type="date" id="attendanceDateFilter">
+                    </div>
+                    
+                    <!-- Attendance Table -->
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Class</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attendanceTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 
+                     EXAMS MANAGEMENT PAGE
+                     Admin/Teacher only - Manage exam schedules
+                  -->
+                <div id="examsPage" class="page">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Subject</th>
+                                    <th>Date</th>
+                                    <th>Total Marks</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="examsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 
+                     RESULTS MANAGEMENT PAGE
+                     Admin/Teacher only - Manage student results
+                     -->
+                <div id="resultsPage" class="page">
+                    <!-- Results Filters -->
+                    <div class="results-filters">
+                        <select id="resultsClassFilter">
+                            <option value="">All Classes</option>
+                        </select>
+                        <select id="resultsExamFilter">
+                            <option value="">All Exams</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Results Table -->
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Exam</th>
+                                    <th>Marks Obtained</th>
+                                    <th>Total Marks</th>
+                                    <th>Percentage</th>
+                                    <th>Grade</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resultsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 
+                     FEES MANAGEMENT PAGE
+                     Admin/Teacher only - Manage fee records
+                     -->
+                <div id="feesPage" class="page">
+                    <!-- Fees Filters -->
+                    <div class="fees-filters">
+                        <select id="feesStatusFilter">
+                            <option value="">All Status</option>
+                            <option value="Paid">Paid</option>
+                            <option value="Pending">Pending</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Fees Table -->
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Due Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="feesTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 
+         MODAL DIALOG
+         For forms - add/edit data
+        -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New</h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="modalForm"></form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 
+         JAVASCRIPT APPLICATION
+         Main application logic
+          -->
+    <script src="js/script.js"></script>
+</body>
+</html>

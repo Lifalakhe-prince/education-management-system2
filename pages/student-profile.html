@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile - EduManage</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 
+         STUDENT PROFILE PAGE
+         PURPOSE: Display detailed student information
+         FUNCTIONALITY:
+         - Shows student's full name and ID
+         - Displays contact information (email)
+         - Shows date of birth
+         - Displays assigned class
+         - Provides option to edit profile
+         - Shows academic progress summary -->
+    <div id="dashboardScreen" class="screen">
+        
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>EduManage</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" data-page="dashboard" class="nav-link">
+                    <i class="fas fa-home"></i> Dashboard
+                </a></li>
+                <li class="menu-section student-menu">Academic</li>
+                <li><a href="#" data-page="profile" class="nav-link student-menu active">
+                    <i class="fas fa-user"></i> Profile
+                </a></li>
+                <li><a href="#" data-page="grades" class="nav-link student-menu">
+                    <i class="fas fa-chart-line"></i> Grades
+                </a></li>
+                <li><a href="#" data-page="assignments" class="nav-link student-menu">
+                    <i class="fas fa-tasks"></i> Assignments
+                </a></li>
+                <li><a href="#" data-page="timetable" class="nav-link student-menu">
+                    <i class="fas fa-calendar-alt"></i> Timetable
+                </a></li>
+                <li><a href="#" data-page="attendance" class="nav-link student-menu">
+                    <i class="fas fa-check-circle"></i> Attendance
+                </a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <div>
+                        <div id="currentUser">Student Name</div>
+                        <div id="currentRole">Student</div>
+                    </div>
+                </div>
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1>My Profile</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="eduManage.editProfile()">
+                        <i class="fas fa-edit"></i> Edit Profile
+                    </button>
+                </div>
+            </header>
+
+            <div id="pageContent" class="page-content">
+                
+                <!-- Profile Page Content -->
+                <div id="profilePage" class="page active">
+                    <div class="profile-full-card">
+                        <!-- Profile Header with Avatar and Basic Info -->
+                        <div class="profile-header-full">
+                            <div class="profile-avatar-large">
+                                <img id="profilePageImage" src="" alt="Profile Picture" style="display: none;">
+                                <i class="fas fa-user-circle" id="profilePageIcon"></i>
+                                <div class="profile-avatar-upload" onclick="eduManage.uploadProfileImage()">
+                                    <i class="fas fa-camera"></i>
+                                </div>
+                            </div>
+                            <div class="profile-details">
+                                <h2 id="profileFullName">Loading...</h2>
+                                <p id="profileStudentInfo">Loading...</p>
+                                <div class="profile-stats">
+                                    <div class="profile-stat">
+                                        <i class="fas fa-envelope"></i>
+                                        <span id="profileEmail">Loading...</span>
+                                    </div>
+                                    <div class="profile-stat">
+                                        <i class="fas fa-birthday-cake"></i>
+                                        <span id="profileDOB">Loading...</span>
+                                    </div>
+                                    <div class="profile-stat">
+                                        <i class="fas fa-school"></i>
+                                        <span id="profileClass">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Profile Actions -->
+                        <div class="profile-actions">
+                            <button class="btn btn-primary" onclick="eduManage.editProfile()">
+                                <i class="fas fa-edit"></i> Edit Profile
+                            </button>
+                            <button class="btn btn-secondary" onclick="eduManage.changePassword()">
+                                <i class="fas fa-key"></i> Change Password
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../js/script.js"></script>
+</body>
+</html>
