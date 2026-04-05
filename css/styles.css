@@ -1,6 +1,6 @@
-/* ========================================
+/* 
    EDUCATION MANAGEMENT SYSTEM STYLES
-   ======================================== */
+   */
 
 /* Reset and Base Styles */
 * {
@@ -16,10 +16,10 @@ body {
     color: #333;
 }
 
-/* ========================================
+/* 
    SCREEN MANAGEMENT SYSTEM
    Controls which screen is visible
-   ======================================== */
+   */
 
 .screen {
     display: none; /* Hide all screens by default */
@@ -407,6 +407,10 @@ body[data-role="student"] .academic-menu {
     flex: 1;
     margin-left: 260px; /* Account for sidebar width */
     animation: fadeIn 0.5s ease-out;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 260px); /* Proper width calculation */
+    overflow-x: hidden;
 }
 
 /* Fade in animation */
@@ -514,15 +518,19 @@ body[data-role="student"] .academic-menu {
 
 .page-content {
     padding: 30px;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .page {
     display: none; /* Hide all pages by default */
     animation: pageSlideIn 0.4s ease-out;
+    width: 100%;
 }
 
 .page.active {
     display: block; /* Show active page */
+    width: 100%;
 }
 
 /* Page entrance animation */
@@ -1323,8 +1331,249 @@ body[data-role="student"] .academic-menu {
     border: none;
     font-size: 24px;
     cursor: pointer;
-    color: #666;
-    transition: all 0.3s ease;
+}
+
+/* ========================================
+   HERO BANNER AND IMAGE SECTION
+   ======================================== */
+
+.hero-banner {
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #ff8c42 100%);
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.hero-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.hero-banner.no-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Dashboard section wrapper */
+.dashboard-section {
+    margin-bottom: 30px;
+}
+
+/* 
+   RESPONSIVE DESIGN - TABLETS AND BELOW
+   ======================================== */
+
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 220px;
+    }
+    
+    .main-content {
+        margin-left: 220px;
+        width: calc(100% - 220px);
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    
+    .assignments-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    
+    .page-content {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Sidebar becomes hamburger menu */
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 260px;
+        height: 100vh;
+        z-index: 2000;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .content-header {
+        padding: 20px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .content-header h1 {
+        font-size: 22px;
+        flex: 1;
+    }
+    
+    .page-content {
+        padding: 15px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .stat-card {
+        padding: 15px;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .hero-banner {
+        height: 200px;
+        margin-bottom: 20px;
+    }
+    
+    .assignments-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .profile-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .timetable-grid {
+        grid-template-columns: 60px repeat(3, 1fr);
+        font-size: 12px;
+    }
+    
+    .timetable-cell {
+        padding: 10px 5px;
+        min-height: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .content-header h1 {
+        font-size: 18px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .stat-card {
+        padding: 12px;
+    }
+    
+    .stat-info h3 {
+        font-size: 24px;
+    }
+    
+    .stat-info p {
+        font-size: 12px;
+    }
+    
+    .page-content {
+        padding: 10px;
+    }
+    
+    .profile-card {
+        padding: 15px;
+    }
+    
+    .assignment-card {
+        padding: 15px;
+    }
+    
+    .hero-banner {
+        height: 150px;
+        margin-bottom: 15px;
+    }
+    
+    .assignments-grid {
+        gap: 15px;
+    }
+    
+    .timetable-grid {
+        grid-template-columns: 50px repeat(2, 1fr);
+    }
+    
+    .timetable-cell {
+        padding: 8px 3px;
+        min-height: 50px;
+        font-size: 11px;
+    }
+    
+    .content-header {
+        padding: 15px;
+        flex-direction: column;
+    }
+    
+    .header-actions {
+        width: 100%;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+    .sidebar,
+    .content-header,
+    .btn,
+    .logout-btn,
+    .header-actions {
+        display: none;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .page-content {
+        padding: 0;
+    }
 }
 
 .modal-close:hover {
