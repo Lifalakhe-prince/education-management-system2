@@ -200,3 +200,23 @@ Edumanagement/
 - **CSS**: Study styles section by section to understand layout
 - **JavaScript**: Read comments to understand each method's purpose
 - **Data Flow**: Understand how data flows between pages and components
+
+
+## System Testing and Results
+
+EduManage was tested against the functional requirements defined in the project brief.
+
+- Student Management: CRUD operations tested successfully. Records can be added, edited, deleted, and searched.
+- Dashboard: Displays total students, average marks, attendance rate, and at-risk learners. Verified with sample data.
+- Grade Analysis: Marks are sorted and categorized into Distinction, Pass, and Fail. Colour-coded bars display correctly.
+- Attendance Tracker: Attendance percentages display with visual bars. Alerts trigger for students below 70%.
+- Responsiveness: The interface adapts to different screen sizes (desktop and laptop tested).
+- Error Handling: Input validation prevents empty fields and invalid marks/attendance values.
+
+### Limitations
+- Data is stored client-side only; refreshing the page resets records.
+- Charts are basic and rely on front-end rendering; no advanced analytics.
+- Login screen is minimal and does not include authentication.
+
+### Conclusion
+The system meets the primary objectives of the N5 curriculum project brief. While not 100% production-ready, it demonstrates systems analysis, design, UI development, and testing principles effectively.
