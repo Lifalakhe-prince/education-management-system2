@@ -1,8 +1,6 @@
 /**
- * ========================================
  * EDUCATION MANAGEMENT SYSTEM
  * Main JavaScript Application
- * ========================================
  */
 
 /**
@@ -1937,3 +1935,48 @@ class EduManageSystem {
 
 // Create global instance of the education management system
 const eduManage = new EduManageSystem();
+
+// === MOCK DATA OVERRIDES FOR DEMO ===
+
+// Replace profile "Loading..." with sample data
+function loadMockProfile() {
+  const mockData = {
+    fullName: "Prince La Kay",
+    studentId: "ST12345",
+    email: "student@example.com",
+    dob: "2000-01-01",
+    class: "NQF Level 5"
+  };
+
+  if (document.getElementById("profileFullName")) {
+    document.getElementById("profileFullName").textContent = mockData.fullName;
+  }
+  if (document.getElementById("profileStudentInfo")) {
+    document.getElementById("profileStudentInfo").textContent = "ID: " + mockData.studentId;
+  }
+  if (document.getElementById("profileEmail")) {
+    document.getElementById("profileEmail").textContent = mockData.email;
+  }
+  if (document.getElementById("profileDOB")) {
+    document.getElementById("profileDOB").textContent = mockData.dob;
+  }
+  if (document.getElementById("profileClass")) {
+    document.getElementById("profileClass").textContent = mockData.class;
+  }
+}
+
+// Replace dashboard "Loading..." with sample data
+function loadMockDashboard() {
+  if (document.getElementById("dashboardWelcome")) {
+    document.getElementById("dashboardWelcome").textContent = "Welcome, Prince La Kay!";
+  }
+  if (document.getElementById("dashboardStats")) {
+    document.getElementById("dashboardStats").textContent = "You have 5 new notifications.";
+  }
+}
+
+// Run mocks on page load
+window.addEventListener("load", () => {
+  loadMockProfile();
+  loadMockDashboard();
+});
